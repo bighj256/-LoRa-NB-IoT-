@@ -16,8 +16,8 @@
 #define KEY1_GPIO_CLK_ENABLE()          do{ RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); }while(0)   /* PA口时钟使能 */
 
 /******************************************************************************************/
-#define KEY0        GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12)     /* 读取KEY0引脚 */
-#define KEY1        GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14)     /* 读取KEY1引脚 */
+#define KEY0        GPIO_ReadInputDataBit(KEY0_GPIO_PORT, KEY0_GPIO_PIN)     /* 读取KEY0引脚 */
+#define KEY1        GPIO_ReadInputDataBit(KEY1_GPIO_PORT, KEY1_GPIO_PIN)     /* 读取KEY1引脚 */
 
 #define KEY0_PRES    1              /* KEY0按下 */
 #define KEY1_PRES    2              /* KEY1按下 */
