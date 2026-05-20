@@ -45,7 +45,7 @@ void sht30_demo_run(void)
     /* 主循环：周期性读取并显示温湿度 */
     while (1)
     {
-        ret = sht30_read_humiture(&temp, &humi);
+        ret = sht30_measure(&temp, &humi);
         if (ret == SHT30_EOK)
         {
             oled_clear(&oled);

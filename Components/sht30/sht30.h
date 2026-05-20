@@ -60,7 +60,7 @@ uint8_t sht30_soft_reset(void);
  *          SHT30_ECRC     - CRC校验失败
  *          SHT30_ETIMEOUT - 读取超时
  */
-uint8_t sht30_read_humiture_raw(int16_t *temp_raw, uint16_t *humi_raw);
+uint8_t sht30_read_humiture_raw(uint16_t *temp_raw, uint16_t *humi_raw);
 
 
 /**

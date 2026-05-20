@@ -14,10 +14,11 @@
 #include "display.h"
 #include "acquisition.h"
 #include "transmission.h"
+//#include "sht30_demo.h"
 
 /* ──────── 设备选择（编译前修改此处） ──────── */
-// #define DEVICE_SENDER      // 发送端启用此行，注释下一行
-#define DEVICE_RECEIVER   // 接收端启用此行，注释上一行
+#define DEVICE_SENDER      // 发送端启用此行，注释下一行
+//#define DEVICE_RECEIVER   // 接收端启用此行，注释上一行
 
 /****************************************************************
  * 共用初始化函数（避免重复代码）
@@ -43,6 +44,9 @@ static void system_common_init(void)
 int main(void)
 {
     system_common_init();
+
+    // /* 运行 SHT30 测试 demo */
+    // sht30_demo_run();
 
     /* ─── 初始化硬件与通信 ─── */
     transmission_lora_init();      /* 发送端仅初始化 LoRa 模块 */
