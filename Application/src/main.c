@@ -52,7 +52,9 @@ int main(void)
     transmission_lora_init();      /* 发送端仅初始化 LoRa 模块 */
     buzzer_beep_scene(BUZZER_SCENE_OK, BUZZER_MODE_INTERMITTENT, BUZZER_RHYTHM_SLOW, 1000);
 
+    //暂时先注释了有问题的SHT30
     acquisition_init();            /* 初始化传感器采集外设 */
+    
     buzzer_beep_scene(BUZZER_SCENE_OK, BUZZER_MODE_INTERMITTENT, BUZZER_RHYTHM_SLOW, 1000);
 
     /* ─── 运行状态变量 ─── */

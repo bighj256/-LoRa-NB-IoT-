@@ -5,10 +5,10 @@
 static sensor_data_t g_sensor_data = {0};
 
 /* ─── 内部辅助：各传感器读取封装 ─── */
-static uint8_t read_air_humiture(float *temp, float *humi)
-{
-    return sht30_measure(temp, humi);
-}
+// static uint8_t read_air_humiture(float *temp, float *humi)
+// {
+//     return sht30_measure(temp, humi);
+// }
 
 static uint8_t read_soil_humidity(float *percent)
 {
@@ -66,7 +66,7 @@ static void sensor_startup_common(const char *name, uint8_t (*init_func)(void))
 void acquisition_init(void)
 {
     sensor_startup_common("BH1750", bh1750_init);
-    sensor_startup_common("SHT30", sht30_init);
+    //sensor_startup_common("SHT30", sht30_init);
     sensor_startup_common("SH393", sh393_init);
     sensor_startup_common("JW01", jw01_init);
     sensor_startup_common("PH4052", ph4052_init);
@@ -77,8 +77,7 @@ void acquisition_init(void)
 uint8_t acquisition_poll(void)
 {
     uint8_t bh1750_status = read_light(&g_sensor_data.light);
-    uint8_t sht30_status = read_air_humiture(&g_sensor_data.air_temp,
-                                             &g_sensor_data.air_humi);
+    //uint8_t sht30_status = read_air_humiture(&g_sensor_data.air_temp, &g_sensor_data.air_humi);
     uint8_t sh393_status = read_soil_humidity(&g_sensor_data.soil_humi);
     uint8_t jw01_status = read_co2(&g_sensor_data.co2);
     uint8_t ph4052_status = read_ph(&g_sensor_data.ph);
@@ -86,7 +85,7 @@ uint8_t acquisition_poll(void)
     // 这里暂时改为了逻辑或，方便调试
     /* 五个传感器均成功才认为数据有效 */
     if (bh1750_status == BH1750_EOK ||
-        sht30_status == SHT30_EOK ||
+        //sht30_status == SHT30_EOK ||
         sh393_status == SH393_EOK ||
         jw01_status == JW01_EOK ||
         ph4052_status == PH4052_EOK)
