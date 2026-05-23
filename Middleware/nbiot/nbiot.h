@@ -89,6 +89,7 @@ uint8_t nbiot_echo_config(nbiot_enable_t enable);
 uint8_t nbiot_sw_reset(void);
 
 /* 网络操作 */
+uint8_t nbiot_check_sim(void);
 uint8_t nbiot_get_csq(nbiot_csq_t *csq);
 uint8_t nbiot_get_creg(nbiot_creg_stat_t *stat);
 uint8_t nbiot_attach_network(void);

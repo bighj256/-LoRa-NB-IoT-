@@ -211,6 +211,17 @@ uint8_t nbiot_sw_reset(void)
 
 
 /**
+ * @brief       检查 SIM 卡状态
+ * @param       无
+ * @retval      NBIOT_EOK   : SIM 卡正常 (READY)
+ *              NBIOT_ERROR : SIM 卡异常或未检测到
+ */
+uint8_t nbiot_check_sim(void)
+{
+    return nbiot_send_at_cmd("AT+CPIN?", "READY", NBIOT_AT_TIMEOUT);
+}
+
+/**
  * @brief       查询NB-IoT信号质量
  * @param       csq: 指向信号质量结构体的指针
  * @retval      NBIOT_EOK   : 查询成功

@@ -24,7 +24,32 @@ void nbiot_demo(void)
     oled_show(&oled, 0, 24, 500, "2. Attaching...");
     ret = nbiot_attach_network();
     if (ret != NBIOT_EOK) {
-        oled_show(&oled, 0, 36, 2000, "Attach fail");
+        nbiot_csq_t csq;
+        nbiot_creg_stat_t creg;
+        
+        oled_clear(&oled);
+        oled_show(&oled, 0, 0, 1000, "Attach fail!");
+        
+        /* 查询信号质量 */
+        if (nbiot_get_csq(&csq) == NBIOT_EOK) {
+            oled_show(&oled, 0, 16, 500, "CSQ: %d", csq.rssi);
+        } else {
+            oled_show(&oled, 0, 16, 500, "CSQ: Err");
+        }
+        
+        /* 查询注册状态 */
+        if (nbiot_get_creg(&creg) == NBIOT_EOK) {
+            oled_show(&oled, 0, 32, 500, "CREG: %d", creg);
+        } else {
+            oled_show(&oled, 0, 32, 500, "CREG: Err");
+        }
+        
+        /* 检查 SIM 卡 */
+        if (nbiot_check_sim() == NBIOT_EOK) {
+            oled_show(&oled, 0, 48, 500, "SIM: OK (Ant?)");
+        } else {
+            oled_show(&oled, 0, 48, 500, "SIM: Error!");
+        }
         while (1);
     }
     delay_ms(2000); // 附着后稍作等待，让基站下发时间
