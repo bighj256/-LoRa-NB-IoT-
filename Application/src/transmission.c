@@ -240,7 +240,6 @@ uint8_t transmission_lora_send(const sensor_data_t *data)
 uint8_t transmission_nbiot_send(const sensor_data_t *data)
 {   
     char json_buf[256];
-    char safe_payload[512]; // 转义后的缓冲区，因为增加了反斜杠，需要设大一些
     uint16_t len;
     uint8_t ret_nbiot;
     
@@ -253,13 +252,8 @@ uint8_t transmission_nbiot_send(const sensor_data_t *data)
     len = pack_json(data, json_buf, sizeof(json_buf));
     if (len == 0) return TRANS_ERROR;
 
-    // 2. 转义双引号 (将 " 变成 \")
-    if (escape_json_for_at(safe_payload, sizeof(safe_payload), json_buf) < 0) {
-        return TRANS_ERROR; // 缓冲区不足转义失败
-    }
-
-    // 3. 使用转义后的字符串发送 (不使用 hex 函数)
-    uint8_t nb_ret = nbiot_mqtt_publish(0, s_mqtt_msgid, 1, 0, "farm/sensor", safe_payload);
+    // 2. 直接使用原始 JSON 字符串发送
+    uint8_t nb_ret = nbiot_mqtt_publish(0, s_mqtt_msgid, 1, 0, "farm/sensor/collect", json_buf);
 
     // 4. 发送完毕后更新 msgid，限定在 1 ~ 65535 范围内
     s_mqtt_msgid++;
