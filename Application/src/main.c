@@ -19,8 +19,8 @@
 //#include "nbiot_demo.h"
 
 /* ──────── 设备选择（编译前修改此处） ──────── */
-//#define DEVICE_SENDER      // 发送端启用此行，注释下一行
-#define DEVICE_RECEIVER   // 接收端启用此行，注释上一行
+#define DEVICE_SENDER      // Lora发送端 启用此行，注释下一行
+//#define DEVICE_RECEIVER   // Lora接收端/NB-Iot发送端 启用此行，注释上一行
 
 /****************************************************************
  * 共用初始化函数（避免重复代码）
@@ -54,7 +54,6 @@ int main(void)
     transmission_lora_init();      /* 发送端仅初始化 LoRa 模块 */
     buzzer_beep_scene(BUZZER_SCENE_OK, BUZZER_MODE_INTERMITTENT, BUZZER_RHYTHM_SLOW, 1000);
 
-    //暂时先注释了有问题的SHT30
     acquisition_init();            /* 初始化传感器采集外设 */
     
     buzzer_beep_scene(BUZZER_SCENE_OK, BUZZER_MODE_INTERMITTENT, BUZZER_RHYTHM_SLOW, 1000);
