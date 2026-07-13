@@ -16,29 +16,11 @@ static struct
 } g_uart_rx_frame = {0};                                    /* LoRa UART接收帧缓冲信息结构体 */
 static uint8_t g_uart_tx_buf[LORA_UART_TX_BUF_SIZE];        /* LoRa UART发送缓冲 */
 
-// /**
-//  * @brief       LoRa UART printf
-//  * @param       fmt: 待打印的数据
-//  * @retval      无
-//  */
-// void lora_uart_printf(char *fmt, ...)
-// {
-//     va_list ap;
-//     uint16_t len;
-    
-//     va_start(ap, fmt);
-//     vsprintf((char *)g_uart_tx_buf, fmt, ap);
-//     va_end(ap);
-    
-//     len = strlen((const char *)g_uart_tx_buf);
-//     usart_send_bytes(g_uart_handle, g_uart_tx_buf, len);
-// }
-
-// /**
-//  * @brief       LoRa UART printf
-//  * @param       fmt: 待打印的数据
-//  * @retval      无
-//  */
+/**
+ * @brief       LoRa UART printf
+ * @param       fmt: 待打印的数据
+ * @retval      无
+ */
 uint8_t lora_uart_printf(char *fmt, ...)
 {
     va_list ap;
@@ -56,14 +38,11 @@ uint8_t lora_uart_printf(char *fmt, ...)
     if(len >= LORA_UART_TX_BUF_SIZE)
     {
         len = LORA_UART_TX_BUF_SIZE - 1;  // 发送截断内容
-
-        usart_send_bytes(g_uart_handle, g_uart_tx_buf, len);  /* 使用你的发送函数 */
-
+        usart_send_bytes(g_uart_handle, g_uart_tx_buf, len);
         return LORA_PRINTF_ERR_TRUNCATED;
     }
 
-    usart_send_bytes(g_uart_handle, g_uart_tx_buf, len);  /* 使用你的发送函数 */
-
+    usart_send_bytes(g_uart_handle, g_uart_tx_buf, len);
     return LORA_PRINTF_OK;
 }
 
@@ -127,10 +106,10 @@ static void lora_timer_msp_init(void)
 
     /* 配置定时器中断 */
     NVIC_InitTypeDef nvic;
-    nvic.NVIC_IRQChannel                    = LORA_TIM_IRQn;
-    nvic.NVIC_IRQChannelPreemptionPriority  = 1;   /* 低于UART抢占优先级（UART为0） */
-    nvic.NVIC_IRQChannelSubPriority         = 0;
-    nvic.NVIC_IRQChannelCmd                 = ENABLE;
+    nvic.NVIC_IRQChannel                    = LORA_TIM_IRQn;       /* 中断通道为 LORA_TIM_IRQn */
+    nvic.NVIC_IRQChannelPreemptionPriority  = 1;                   /* 低于UART抢占优先级（UART为0） */
+    nvic.NVIC_IRQChannelSubPriority         = 0;                   /* 响应优先级为0 */
+    nvic.NVIC_IRQChannelCmd                 = ENABLE;              /* 使能中断 */
     NVIC_Init(&nvic);
 }
 
@@ -147,9 +126,9 @@ void lora_timer_init(void)
     /* 定时器时基配置 */
     TIM_TimeBaseInitTypeDef tim;
     TIM_TimeBaseStructInit(&tim);
-    tim.TIM_Prescaler     = LORA_TIM_PRESCALER - 1;  /* 如 7200-1 */
+    tim.TIM_Prescaler     = LORA_TIM_PRESCALER - 1;  /*PSC 如 7200-1 */
+    tim.TIM_Period        = 100 - 1;                 /*ARR 自动重载值，产生 10ms 中断（10kHz * 100） 72MHz/(7200*100)=100Hz*/
     tim.TIM_CounterMode   = TIM_CounterMode_Up;
-    tim.TIM_Period        = 100 - 1;                        /* 自动重载值，产生 10ms 中断（10kHz * 100） */
     tim.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_TimeBaseInit(g_tim_handle, &tim);
 
@@ -262,8 +241,8 @@ void LORA_TIM_IRQHandler(void)
 {
     if (TIM_GetITStatus(g_tim_handle, TIM_IT_Update) != RESET) 
     {
-        TIM_ClearITPendingBit(g_tim_handle, TIM_IT_Update);
-        g_uart_rx_frame.sta.finsh = 1;              /* 标记帧接收完成 */
-        TIM_Cmd(g_tim_handle, DISABLE);             /* 停止定时器 */
+        TIM_ClearITPendingBit(g_tim_handle, TIM_IT_Update); //清除更新中断标志
+        g_uart_rx_frame.sta.finsh = 1;                      // 标记帧接收完成
+        TIM_Cmd(g_tim_handle, DISABLE);                     // 停止定时器
     }
 }

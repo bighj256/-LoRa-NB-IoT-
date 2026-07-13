@@ -28,7 +28,7 @@ void nbiot_uart_printf(char *fmt, ...)
     len = vsnprintf((char *)g_uart_tx_buf, NBIOT_UART_TX_BUF_SIZE, fmt, ap);
     va_end(ap);
 
-    usart_send_bytes(g_uart_handle, g_uart_tx_buf, len); // 使用你的发送函数
+    usart_send_bytes(g_uart_handle, g_uart_tx_buf, len);
 }
 
 /**

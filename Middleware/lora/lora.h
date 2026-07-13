@@ -99,22 +99,22 @@ typedef enum
 } lora_uartpari_t;
 
 // /* 操作函数 */
-uint8_t lora_init(uint32_t baudrate);                                                 /* ATK-MW1278D初始化 */
-void lora_enter_config(void);                                                         /* ATK-MW1278D模块进入配置模式 */
-void lora_exit_config(void);                                                          /* ATK-MW1278D模块进退出置模式 */
-uint8_t lora_free(void);                                                              /* 判断ATK-MW1278D模块是否空闲 */
-uint8_t lora_send_at_cmd(char *cmd, char *ack, uint32_t timeout);                     /* 向ATK-MW1278D模块发送AT指令 */
-uint8_t lora_at_test(void);                                                           /* ATK-MW1278D模块AT指令测试 */
-uint8_t lora_echo_config(lora_enable_t enable);                                       /* ATK-MW1278D模块指令回显配置 */
-uint8_t lora_sw_reset(void);                                                          /* ATK-MW1278D模块软件复位 */
-uint8_t lora_flash_config(lora_enable_t enable);                                      /* ATK-MW1278D模块参数保存配置 */
-uint8_t lora_default(void);                                                           /* ATK-MW1278D模块恢复出厂配置 */
-uint8_t lora_addr_config(uint16_t addr);                                              /* ATK-MW1278D模块设备地址配置 */
-uint8_t lora_tpower_config(lora_tpower_t tpower);                                     /* ATK-MW1278D模块发射功率配置 */
-uint8_t lora_workmode_config(lora_workmode_t workmode);                               /* ATK-MW1278D模块工作模式配置 */
-uint8_t lora_tmode_config(lora_tmode_t tmode);                                        /* ATK-MW1278D模块发送模式配置 */
-uint8_t lora_wlrate_channel_config(lora_wlrate_t wlrate, uint8_t channel);            /* ATK-MW1278D模块空中速率和信道配置 */
-uint8_t lora_wltime_config(lora_wltime_t wltime);                                     /* ATK-MW1278D模块休眠时间配置 */
-uint8_t lora_uart_config(lora_uartrate_t baudrate, lora_uartpari_t parity);           /* ATK-MW1278D模块串口配置 */
+uint8_t lora_init(uint32_t baudrate);                                                 /* ATK-LORA-01初始化 */
+void lora_enter_config(void);                                                         /* ATK-LORA-01模块进入配置模式 */
+void lora_exit_config(void);                                                          /* ATK-LORA-01模块进退出置模式 */
+uint8_t lora_free(void);                                                              /* 判断ATK-LORA-01模块是否空闲 */
+uint8_t lora_send_at_cmd(char *cmd, char *ack, uint32_t timeout);                     /* 向ATK-LORA-01模块发送AT指令 */
+uint8_t lora_at_test(void);                                                           /* ATK-LORA-01模块AT指令测试 */
+uint8_t lora_echo_config(lora_enable_t enable);                                       /* ATK-LORA-01模块指令回显配置 */
+uint8_t lora_sw_reset(void);                                                          /* ATK-LORA-01模块软件复位 */
+uint8_t lora_flash_config(lora_enable_t enable);                                      /* ATK-LORA-01模块参数保存配置 */
+uint8_t lora_default(void);                                                           /* ATK-LORA-01模块恢复出厂配置 */
+uint8_t lora_addr_config(uint16_t addr);                                              /* ATK-LORA-01模块设备地址配置 */
+uint8_t lora_tpower_config(lora_tpower_t tpower);                                     /* ATK-LORA-01模块发射功率配置 */
+uint8_t lora_workmode_config(lora_workmode_t workmode);                               /* ATK-LORA-01模块工作模式配置 */
+uint8_t lora_tmode_config(lora_tmode_t tmode);                                        /* ATK-LORA-01模块发送模式配置 */
+uint8_t lora_wlrate_channel_config(lora_wlrate_t wlrate, uint8_t channel);            /* ATK-LORA-01模块空中速率和信道配置 */
+uint8_t lora_wltime_config(lora_wltime_t wltime);                                     /* ATK-LORA-01模块休眠时间配置 */
+uint8_t lora_uart_config(lora_uartrate_t baudrate, lora_uartpari_t parity);           /* ATK-LORA-01模块串口配置 */
 
 #endif // __LORA_H

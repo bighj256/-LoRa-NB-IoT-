@@ -11,9 +11,9 @@ void led_init(void)
 
     GPIO_InitTypeDef gpio;
 
-    gpio.GPIO_Pin = GPIO_Pin_13;
-    gpio.GPIO_Speed = GPIO_Speed_2MHz;
-    gpio.GPIO_Mode = GPIO_Mode_Out_OD;
+    gpio.GPIO_Pin = GPIO_Pin_13;            // 连接 LED 的引脚
+    gpio.GPIO_Speed = GPIO_Speed_2MHz;      // 输出速度
+    gpio.GPIO_Mode = GPIO_Mode_Out_OD;      // 开漏输出
     GPIO_Init(GPIOC, &gpio);
     GPIO_WriteBit(GPIOC, GPIO_Pin_13, Bit_SET);
 }

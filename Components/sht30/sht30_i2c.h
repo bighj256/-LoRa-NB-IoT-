@@ -23,7 +23,7 @@
 #define SHT30_ADDR_LEVEL                  0   /* 0：ADDR 接低电平（地址 0x44），1：ADDR 接高电平（地址 0x45） */
 
 #if (SHT30_ADDR_LEVEL == 0)
-    #define SHT30_SLAVE_ADDR              0x88    /* 7位地址 0x44 << 1 */
+    #define SHT30_SLAVE_ADDR              0x88    /* 7位地址 0x44 << 1 */               // 左移一位为读写标志位腾出位置
 #else
     #define SHT30_SLAVE_ADDR              0x8A    /* 7位地址 0x45 << 1 */
 #endif

@@ -23,12 +23,12 @@ __weak void usart_send_bytes(USART_TypeDef *USARTx, const uint8_t *pData, uint16
 	
 	for(uint16_t i=0; i < Size; i++)
 	{
-		while(USART_GetFlagStatus(USARTx, USART_FLAG_TXE) == RESET);
+		while(USART_GetFlagStatus(USARTx, USART_FLAG_TXE) == RESET);//等待发送缓冲区空
 		
-		USART_SendData(USARTx, pData[i]);
+		USART_SendData(USARTx, pData[i]);//发送数据
 	}
 	
-	while(USART_GetFlagStatus(USARTx, USART_FLAG_TC) == RESET);
+	while(USART_GetFlagStatus(USARTx, USART_FLAG_TC) == RESET);//等待发送完成
 }
 
 /**

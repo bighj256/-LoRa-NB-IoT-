@@ -1,9 +1,7 @@
 /**
  * @file    main.c
  * @brief   主程序入口 - LoRa/NB-IoT 农业监测系统
- * @author  Lora项目组
- * @date    2026-05-4
- * @version 5.0.0
+ * @date    2026-07-13
  */
 #include "stm32f10x.h"
 #include "sys.h"
@@ -18,9 +16,9 @@
 // #include "lora_demo.h"
 //#include "nbiot_demo.h"
 
-/* ──────── 设备选择（编译前修改此处） ──────── */
-#define DEVICE_SENDER      // Lora发送端 启用此行，注释下一行
-//#define DEVICE_RECEIVER   // Lora接收端/NB-Iot发送端 启用此行，注释上一行
+/* ──────── 设备选择 ──────── */
+//#define DEVICE_SENDER      // Lora发送端 启用此行，注释下一行
+#define DEVICE_RECEIVER   // Lora接收端/NB-Iot发送端 启用此行，注释上一行
 
 /****************************************************************
  * 共用初始化函数（避免重复代码）
@@ -72,7 +70,7 @@ int main(void)
     {
         /* 1. 获取系统运行时间 (用于非阻塞定时调度) */
         uint32_t sys_uptime_ms = get_ms();
-        uint8_t key_val = key_scan(0); 
+        uint8_t key_val = key_scan(PRESS_REPEATEDLY_DISABLE); 
 
         /* 2. 定时采集传感器数据 */
         if (sys_uptime_ms - last_collect_ms >= COLLECT_INTERVAL_MS) 

@@ -15,5 +15,6 @@
 
 uint8_t adcx_init(ADC_TypeDef* ADCx);
 uint8_t adcx_get_value(ADC_TypeDef* ADCx, uint8_t ADC_Channel, uint8_t ADC_SampleTime, uint16_t *value);
+uint8_t adcx_get_value_filter(ADC_TypeDef* ADCx, uint8_t ADC_Channel, uint8_t ADC_SampleTime, uint8_t n, uint16_t *value);
 
 #endif

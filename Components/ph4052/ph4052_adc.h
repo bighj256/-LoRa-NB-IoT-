@@ -17,11 +17,11 @@
 #define PH4052_ADC_CLK_ENABLE()        do{ RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE); }while(0)
 
 /* 超时保护（ADC 校准或转换最大等待次数，单次循环约 10us） */
-#define PH4052_ADC_TIMEOUT             10000
+#define PH4052_ADC_TIMEOUT             ADC_CALIB_TIMEOUT
 
 /* ────────── 错误码 ────────── */
-#define PH4052_ADC_EOK                0
-#define PH4052_ADC_ERROR              1
+#define PH4052_ADC_EOK                ADC_EOK
+#define PH4052_ADC_ERROR              ADC_ERROR
 
 /* ────────── 函数声明 ────────── */
 uint8_t ph4052_adc_init(void);                    /* 初始化 ADC 通道，成功返回 PH4052_ADC_EOK */

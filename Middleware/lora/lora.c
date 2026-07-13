@@ -448,7 +448,7 @@ uint8_t lora_wlrate_channel_config(lora_wlrate_t wlrate, uint8_t channel)
         }
     }
     
-    if (channel > 83)
+    if (channel > 31)
     {
         return LORA_EINVAL;
     }

@@ -17,11 +17,11 @@
 #define SH393_ADC_CLK_ENABLE()        do{ RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE); }while(0)
 
 /* ADC 硬件校准超时，约 100ms（仅用于上电初始化） */
-#define  SH393_ADC_TIMEOUT  10000
+#define  SH393_ADC_TIMEOUT            ADC_CALIB_TIMEOUT
 
 /* ────────── 错误码 ────────── */
-#define SH393_ADC_EOK                0
-#define SH393_ADC_ERROR              1
+#define SH393_ADC_EOK                ADC_EOK
+#define SH393_ADC_ERROR              ADC_ERROR
 
 /* ────────── 函数声明 ────────── */
 uint8_t sh393_adc_init(void);                    /* 初始化 ADC 通道，成功返回 SH393_ADC_EOK */

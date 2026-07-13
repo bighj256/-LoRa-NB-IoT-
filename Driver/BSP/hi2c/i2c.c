@@ -123,54 +123,57 @@ __weak int i2c_receive_bytes(I2C_TypeDef *I2Cx, uint8_t Addr, uint8_t *pBuffer, 
 	// #4. 数据读取
 	if(Size == 1)
 	{
-		// 向ACK写0
+		/* EV6_1: 单字节读取 — 先设NACK和STOP，再清ADDR */
+		// 向ACK写0（NACK）
 		I2C_AcknowledgeConfig(I2Cx, DISABLE);
-		
-		// 清除ADDR
-		__disable_irq();
-		I2C_ReadRegister(I2Cx, I2C_Register_SR1);
-		I2C_ReadRegister(I2Cx, I2C_Register_SR2);
-		
 		// 发送停止位
 		I2C_GenerateSTOP(I2Cx, ENABLE);
-		__enable_irq();
+
+		// 清除ADDR（读SR1再读SR2）
+		I2C_ReadRegister(I2Cx, I2C_Register_SR1);
+		I2C_ReadRegister(I2Cx, I2C_Register_SR2);
+
 		// 等待RxNE置位
 		while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_RXNE) == RESET);
 		// 读取数据
 		pBuffer[0] = I2C_ReceiveData(I2Cx);
 	}
-	else // hi2c 读取多字节的底层有问题：
+	else // Size > 1
 	{
-		// 向ACK写1
+		// 向ACK写1（ACK），用于前 Size-2 个字节
 		I2C_AcknowledgeConfig(I2Cx, ENABLE);
-		
+
 		// 清除ADDR
 		I2C_ReadRegister(I2Cx, I2C_Register_SR1);
 		I2C_ReadRegister(I2Cx, I2C_Register_SR2);
-		
-		for(uint16_t i=0; i<Size-1; i++)
-		{
-			if(i==Size-2)
-			{
-				__disable_irq();
-			}
 
+		// 读取前 Size-2 个字节（正常ACK应答）
+		for(uint16_t i = 0; i < Size - 2; i++)
+		{
 			// 等待RxNE置位
 			while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_RXNE) == RESET);
-			// 读取
+			// 读取数据
 			pBuffer[i] = I2C_ReceiveData(I2Cx);
 		}
-		
-		// 向ACK写0
-		I2C_AcknowledgeConfig(I2Cx, DISABLE);
-		// 发送停止位
-		I2C_GenerateSTOP(I2Cx, ENABLE);
-		
-		__enable_irq();
-		
-		// 等待RxNE置位
+
+		/* EV7_1: 倒数第二个字节 — 关中断，先设NACK+STOP，再读DR */
+		__disable_irq();
+
+		// 等待倒数第二个字节就绪
 		while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_RXNE) == RESET);
-		pBuffer[Size-1] = I2C_ReceiveData(I2Cx);
+
+		// 在读DR之前设置NACK和STOP，确保最后一个字节被NACK
+		I2C_AcknowledgeConfig(I2Cx, DISABLE);
+		I2C_GenerateSTOP(I2Cx, ENABLE);
+
+		// 读取倒数第二个字节
+		pBuffer[Size - 2] = I2C_ReceiveData(I2Cx);
+
+		__enable_irq();
+
+		// 读取最后一个字节
+		while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_RXNE) == RESET);
+		pBuffer[Size - 1] = I2C_ReceiveData(I2Cx);
 	}
 	
 	return 0;

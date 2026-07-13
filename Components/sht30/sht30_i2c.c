@@ -53,7 +53,8 @@ int sht30_i2c_write_cmd(uint16_t cmd)
     buf[0] = (cmd >> 8) & 0xFF;   /* MSB */
     buf[1] = cmd & 0xFF;          /* LSB */
 
-    if (i2c_send_bytes(g_i2c_handle, SHT30_SLAVE_ADDR, buf, 2) != 0) {
+    if (i2c_send_bytes(g_i2c_handle, SHT30_SLAVE_ADDR, buf, 2) != 0) // 向SHT30发送由buf[0](高字节)和buf[1](低字节)组成的16位控制指令
+    {
         return SHT30_ERROR;
     }
     return SHT30_EOK;
@@ -67,7 +68,8 @@ int sht30_i2c_write_cmd(uint16_t cmd)
  */
 int sht30_i2c_read_raw(uint8_t *buf, uint8_t len)
 {
-    if (i2c_receive_bytes(g_i2c_handle, SHT30_SLAVE_ADDR, buf, len) != 0) {
+    if (i2c_receive_bytes(g_i2c_handle, SHT30_SLAVE_ADDR, buf, len) != 0) // 接收6个字节 分别是温度高位温度低位 CRC检测 湿度高位湿度低位 CRC检测
+    {
         return SHT30_ERROR;
     }
     return SHT30_EOK;

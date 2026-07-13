@@ -30,8 +30,13 @@ typedef enum {
     KS_RELEASE_DEBOUNCE
 } key_state_t;
 
+typedef enum{
+    PRESS_REPEATEDLY_DISABLE = 0,
+    PRESS_REPEATEDLY_ENAVLE
+} key_mode;
+
 void key_init(void);                /* 按键初始化函数 */
-uint8_t key_scan(uint8_t mode);     /* 按键扫描函数 */
+uint8_t key_scan(key_mode mode);     /* 按键扫描函数 */
 uint8_t key_scan_noblock(uint32_t now_ms);
 
 #endif

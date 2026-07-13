@@ -1,9 +1,9 @@
 #include "delay.h"
 
-__IO uint32_t ulTicks;
+__IO uint32_t ulTicks;// 全局毫秒计数器
 
-static uint8_t delay_initialized_flag = 0;
-static float us_per_mini_tick;
+static uint8_t delay_initialized_flag = 0;// 延迟函数初始化标志
+static float us_per_mini_tick;// 每毫秒对应的微秒数
 
 
 /**
@@ -16,14 +16,14 @@ void systick_init(void)
 	{
 		delay_initialized_flag = 1;
 		
-		RCC_ClocksTypeDef clockinfo = {0};
+		RCC_ClocksTypeDef clockinfo = {0};// 时钟信息结构体
 		uint32_t tmp;
 		
 		SysTick->CTRL &= ~SysTick_CTRL_ENABLE; // 禁止SYSTICK
 
 		ulTicks = 0;
 
-		RCC_GetClocksFreq(&clockinfo);
+		RCC_GetClocksFreq(&clockinfo);// 获取系统主频
 
 		SysTick->CTRL |= SysTick_CTRL_TICKINT; // 开启中断
 

@@ -83,12 +83,11 @@ uint8_t acquisition_poll(void)
     uint8_t jw01_status = read_co2(&g_sensor_data.co2);
     uint8_t ph4052_status = read_ph(&g_sensor_data.ph);
 
-    // 这里暂时改为了逻辑或，方便调试
-    /* 五个传感器均成功才认为数据有效 */
-    if (bh1750_status == BH1750_EOK ||
-        sht30_status == SHT30_EOK ||
-        sh393_status == SH393_EOK ||
-        jw01_status == JW01_EOK ||
+    // 五个传感器均成功才认为数据有效
+    if (bh1750_status == BH1750_EOK &&
+        sht30_status == SHT30_EOK &&
+        sh393_status == SH393_EOK &&
+        jw01_status == JW01_EOK &&
         ph4052_status == PH4052_EOK)
     {
         g_sensor_data.timestamp = get_ms(); /* 记录时间戳 */

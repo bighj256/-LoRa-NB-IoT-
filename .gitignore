@@ -14,23 +14,26 @@ Desktop.ini
 # C/C++ IDEs & Toolchains (VS Code, eide, clangd)
 # ==============================================================================
 # VS Code
-.vscode/c_cpp_properties.json
-.vscode/*.log
-.vscode/*.lock
-/.settings
+.vscode/
 
 # clangd
 .clangd/
 .cache/
 
-# eide plugin
+# eide plugin (keep eide.yml / env.ini / files.options.yml — they define the build)
 /.eide/log
 /.eide.usr.ctx.json
 *.ept
 *.eide-template
 
 # ==============================================================================
-# Keil MDK-ARM Generated Files
+# Keil / ARM — CMSIS Packs & Device Files (large vendor binaries)
+# ==============================================================================
+.cmsis/
+.pack/
+
+# ==============================================================================
+# Keil MDK-ARM Build Artifacts
 # ==============================================================================
 *.bak
 *.dep
@@ -41,11 +44,13 @@ Desktop.ini
 *.crf
 *.d
 *.axf
+*.elf
 *.hex
 *.bin
 *.sct
 *.lnp
 *.uvguix.*
+*.uvoptx
 *.scvd
 *.Administrator
 JLinkLog.txt
@@ -63,9 +68,10 @@ JLinkLog.txt
 /Release/
 /Listings/
 /Objects/
+/RTE/
 
 # ==============================================================================
-# General C/C++ Compilation outputs
+# General C/C++ Compilation Outputs
 # ==============================================================================
 *.i
 *.lib
@@ -78,4 +84,7 @@ JLinkLog.txt
 *.sqlite
 *.VC.db
 
+# ==============================================================================
+# Documents
+# ==============================================================================
 *.pdf

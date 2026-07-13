@@ -99,12 +99,20 @@ uint8_t key_scan_noblock(uint32_t now_ms)
  *              KEY1_PRES, 2, KEY1按下
  *              WKUP_PRES, 3, WKUP按下
  */
-uint8_t key_scan(uint8_t mode)
+uint8_t key_scan(key_mode mode)
 {
     static uint8_t key_up = 1;  /* 按键按松开标志 */
     uint8_t keyval = 0;
 
-    if(mode) key_up = 1;       /* 支持连按 */
+    //if(mode) key_up = 1;       /* 支持连按 */
+    switch (mode)
+    {
+    case PRESS_REPEATEDLY_ENAVLE:
+        key_up = 1;
+        break;
+    default:
+        break;
+    }
 
     if(key_up && (KEY0 == Bit_SET || KEY1 == Bit_SET ))  /* 按键松开标志为1, 且有任意一个按键按下了 */
     {

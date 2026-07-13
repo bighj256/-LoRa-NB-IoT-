@@ -34,7 +34,7 @@ void lora_demo_run(void)
     uint8_t key;
     uint8_t *buf;
 
-	/* 初始化ATK-MW1278D模块（波特率115200） */
+	/* 初始化ATK-LORA-01模块（波特率115200） */
     ret = lora_init(115200);
     if (ret != LORA_EOK)
     {
@@ -72,7 +72,7 @@ void lora_demo_run(void)
         oled_clear(&oled);
         oled_show(&oled, 25, 50, 0, "KEY0: Send");
 
-        key = key_scan(0);                          /* 扫描按键（0：不连续扫描） */
+        key = key_scan(PRESS_REPEATEDLY_DISABLE);                          /* 扫描按键（0：不连续扫描） */
         /* float distance = HCSR04_demo(); */          /* 开始测距 */
 
         if (key == KEY0_PRES)                       /* 如果KEY0按下 */
